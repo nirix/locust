@@ -4,20 +4,20 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ea92c35b87f322b8778c39ed085bef72",
+    "hash": "b8ba4285350c902850262900918224eb",
     "packages": [
         {
             "name": "nirix/nanite",
-            "version": "v1.0.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nirix/nanite.git",
-                "reference": "6e77819214c5ef1e37aedd97453102effe181975"
+                "reference": "3547a239450a2e1582cb038710f2460fd9c913cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nirix/nanite/zipball/6e77819214c5ef1e37aedd97453102effe181975",
-                "reference": "6e77819214c5ef1e37aedd97453102effe181975",
+                "url": "https://api.github.com/repos/nirix/nanite/zipball/3547a239450a2e1582cb038710f2460fd9c913cd",
+                "reference": "3547a239450a2e1582cb038710f2460fd9c913cd",
                 "shasum": ""
             },
             "require": {
@@ -48,13 +48,15 @@
                 "framework",
                 "micro"
             ],
-            "time": "2014-09-28 18:16:56"
+            "time": "2015-07-01 15:56:07"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "nirix/nanite": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

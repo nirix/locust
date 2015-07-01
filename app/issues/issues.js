@@ -31,4 +31,9 @@ angular.module('locust.issues', ['ngRoute'])
   }])
   .controller('IssuesDetailCtrl', ['$scope', '$routeParams', '$location', 'Issue', function($scope, $routeParams, $location, Issue) {
     $scope.issue = Issue.get({ issueId: $routeParams.issueId });
+    $scope.delete = function() {
+      $scope.issue.$delete(function() {
+        $location.path('/issues');
+      });
+    };
   }]);

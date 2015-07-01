@@ -78,6 +78,12 @@ post('/issues.json', function () use ($db) {
     }
 });
 
+// Delete issue
+delete('/issues.json', function () use ($db) {
+    $id = $_REQUEST['id'];
+    $result = $db->prepare("DELETE FROM issues WHERE id = ?")->execute([$id]);
+});
+
 // Show issue
 get('/issues/(\d+).json', function ($id) use ($db) {
     $issue = $db->prepare("SELECT * FROM issues WHERE id = ? LIMIT 1");
