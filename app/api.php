@@ -1,36 +1,49 @@
 <?php
 require __DIR__ . '/vendor/autoload.php';
 
-$versions = [
-    ['id' => 1, 'name' => '0.1.0', 'slug' => '0.1.0', 'display_order' => 00100],
-    ['id' => 2, 'name' => '0.2.0', 'slug' => '0.2.0', 'display_order' => 00200],
-    ['id' => 3, 'name' => '1.0.0', 'slug' => '1.0.0', 'display_order' => 10000]
-];
+$config = require "config.php";
 
-get('/roadmap.json', function () use ($versions) {
-    echo json_encode($versions);
+// Database connection
+switch ($config['driver']) {
+    case 'pgsql':
+    case 'mysql':
+        $db = new PDO(
+            "{$config['driver']}:host={$config['host']};dbname={$config['dbname']}",
+            $config['user'],
+            $config['password']
+        );
+        break;
+
+    default:
+        die("Unsupported database driver.");
+}
+
+// -----------------------------------------------------------------------------
+// Roadmap
+get('/roadmap.json', function () use ($db) {
+    $versions = $db->prepare("SELECT * FROM versions ORDER BY display_order");
+    $versions->execute();
+    echo json_encode($versions->fetchAll(PDO::FETCH_ASSOC));
 });
 
-get('/roadmap/(0.1.0|0.2.0|1.0.0).json', function ($id) use ($versions) {
-    switch ($id) {
-        case '0.1.0':
-            $version = $versions[0];
-            break;
-
-        case '0.2.0':
-            $version = $versions[1];
-            break;
-
-        case '1.0.0':
-            $version = $versions[2];
-            break;
-    }
-
-    echo json_encode($version);
+// Show version
+get('/roadmap/(.*).json', function ($slug) use ($db) {
+    $version = $db->prepare("SELECT * FROM versions WHERE slug = ? LIMIT 1");
+    $version->execute([$slug]);
+    echo json_encode($version->fetch(PDO::FETCH_ASSOC));
 });
 
-get('/issues.json', function () {
-    echo json_encode([
-        ['id' => 1, 'summary' => 'It\'s broked']
-    ]);
+// -----------------------------------------------------------------------------
+// Issues
+get('/issues.json', function () use ($db) {
+    $issues = $db->prepare("SELECT * FROM issues");
+    $issues->execute();
+    echo json_encode($issues->fetchAll(PDO::FETCH_ASSOC));
+});
+
+// Show issue
+get('/issues/(\d+).json', function ($id) use ($db) {
+    $issue = $db->prepare("SELECT * FROM issues WHERE id = ? LIMIT 1");
+    $issue->execute([$id]);
+    echo json_encode($issue->fetch(PDO::FETCH_ASSOC));
 });
