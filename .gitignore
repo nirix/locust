@@ -1,4 +1,5 @@
 .DS_Store
 node_modules/
+app/config.php
 app/vendor
 app/bower_components

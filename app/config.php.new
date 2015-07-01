@@ -1,0 +1,8 @@
+<?php
+return [
+    'driver'   => 'pgsql',
+    'host'     => 'localhost',
+    'dbname'   => 'locust',
+    'user'     => 'me',
+    'password' => ''
+];
