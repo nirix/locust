@@ -41,6 +41,43 @@ get('/issues.json', function () use ($db) {
     echo json_encode($issues->fetchAll(PDO::FETCH_ASSOC));
 });
 
+// Create issue
+post('/issues.json', function () use ($db) {
+    $_NG = json_decode(file_get_contents('php://input'), true);
+
+    $data = [
+        'summary'     => $_NG['summary'],
+        'description' => $_NG['description'],
+        'version_id'  => 1,
+        'user_id'     => 0
+    ];
+
+    $error = false;
+    foreach (['summary', 'description'] as $field) {
+        if (empty($data[$field])) {
+            $error = true;
+        }
+    }
+
+    if (!$error) {
+        $result = $db->prepare("INSERT INTO issues
+            (summary, description, version_id, user_id, created_at, updated_at)
+            VALUES(
+                :summary,
+                :description,
+                :version_id,
+                :user_id,
+                NOW(),
+                NOW()
+            )
+        ")
+        ->execute($data);
+
+        $lastInserted = $db->query("SELECT * FROM issues ORDER BY id DESC LIMIT 1");
+        echo json_encode($lastInserted->fetch(PDO::FETCH_ASSOC));
+    }
+});
+
 // Show issue
 get('/issues/(\d+).json', function ($id) use ($db) {
     $issue = $db->prepare("SELECT * FROM issues WHERE id = ? LIMIT 1");

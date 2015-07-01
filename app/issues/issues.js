@@ -7,6 +7,11 @@ angular.module('locust.issues', ['ngRoute'])
       controller: 'IssuesCtrl'
     });
 
+    $routeProvider.when('/issues/new', {
+      templateUrl: 'issues/new.html',
+      controller: 'NewIssueCtrl'
+    });
+
     $routeProvider.when('/issues/:issueId', {
       templateUrl: 'issues/show.html',
       controller: 'IssuesDetailCtrl'
@@ -15,6 +20,15 @@ angular.module('locust.issues', ['ngRoute'])
   .controller('IssuesCtrl', ['$scope', 'Issue', function($scope, Issue) {
     $scope.issues = Issue.query();
   }])
-  .controller('IssuesDetailCtrl', ['$scope', '$routeParams', 'Issue', function($scope, $routeParams, Issue) {
+  .controller('NewIssueCtrl', ['$scope', '$location', 'Issue', function($scope, $location, Issue){
+    $scope.issue = new Issue();
+
+    $scope.create = function(issue) {
+      $scope.issue.$save(function(issue) {
+        $location.path('/issues/' + issue.id);
+      });
+    };
+  }])
+  .controller('IssuesDetailCtrl', ['$scope', '$routeParams', '$location', 'Issue', function($scope, $routeParams, $location, Issue) {
     $scope.issue = Issue.get({ issueId: $routeParams.issueId });
   }]);
