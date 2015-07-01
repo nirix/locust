@@ -9,7 +9,7 @@
 		<tbody>
 			<tr ng-repeat="issue in issues">
 				<td>{{issue.id}}</td>
-				<td>{{issue.summary}}</td>
+				<td><a href="#/issues/{{issue.id}}">{{issue.summary}}</a></td>
 			</tr>
 		</tbody>
 	</table>
