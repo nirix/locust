@@ -104,3 +104,8 @@ get('/issues/(\d+).json', function ($id) use ($db) {
     $issue->execute([$id]);
     echo json_encode($issue->fetch(PDO::FETCH_ASSOC));
 });
+
+// 404
+if (!Nanite::$routeProccessed) {
+    http_response_code(404);
+}
