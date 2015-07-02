@@ -1,21 +1,21 @@
-<div class="form-group" ng-class="{ 'has-error': form.$submitted && form.summary.$invalid }">
+<div class="form-group" ng-class="{ 'has-error': issueForm.summary.$invalid && !issueForm.summary.$pristine }">
 	<label for="" class="control-label col-md-3">Summary</label>
 	<div class="col-md-9">
 		<input type="text" name="summary" class="form-control" ng-model="issue.summary" ng-minlength="10" required />
-		<div ng-show="form.$submitted || form.summary.$touched" class="help-block">
-			<div ng-show="form.summary.$error.required">Please enter a summary.</div>
-			<div ng-show="form.summary.$error.minlength">Summary is too short.</div>
+		<div ng-show="issueForm.summary.$invalid && !issueForm.summary.$pristine" class="help-block">
+			<div ng-show="issueForm.summary.$error.required">Please enter a summary.</div>
+			<div ng-show="issueForm.summary.$error.minlength">Summary is too short.</div>
 		</div>
 	</div>
 </div>
 
-<div class="form-group" ng-class="{ 'has-error': form.$submitted && form.description.$invalid }">
+<div class="form-group" ng-class="{ 'has-error': issueForm.$invalid && !issueForm.description.$pristine }">
 	<label for="" class="control-label col-md-3">Description</label>
 	<div class="col-md-9">
 		<textarea name="description" class="form-control" ng-model="issue.description" ng-minlength="10" required></textarea>
-		<div ng-show="form.$submitted || form.description.$touched" class="help-block">
-			<div ng-show="form.description.$error.required">Please enter a description.</div>
-			<div ng-show="form.description.$error.minlength">Description is too short.</div>
+		<div ng-show="issueForm.description.$invalid && !issueForm.description.$pristine" class="help-block">
+			<div ng-show="issueForm.description.$error.required">Please enter a description.</div>
+			<div ng-show="issueForm.description.$error.minlength">Description is too short.</div>
 		</div>
 	</div>
 </div>

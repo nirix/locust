@@ -1,11 +1,11 @@
 <div class="new-issue container" ng-controller="NewIssueCtrl">
 	<h1 class="page-header">New Issue</h1>
 
-	<form name="form" role="form" class="form-horizontal" ng-submit="create(issue)" novalidate>
+	<form name="issueForm" role="form" class="form-horizontal" ng-submit="create(issue)" novalidate>
 		<div ng-include="'issues/_form.html'"></div>
 
 		<div class="text-center">
-			<button class="btn btn-success">Create</button>
+			<button class="btn btn-success" ng-disabled="issueForm.$invalid">Create</button>
 		</div>
 	</form>
 </div>

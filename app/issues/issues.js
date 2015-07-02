@@ -32,13 +32,15 @@ angular.module('locust.issues', ['ui.router'])
 .controller('IssuesCtrl', ['$scope', 'Issue', function($scope, Issue) {
   $scope.issues = Issue.query();
 }])
-.controller('NewIssueCtrl', ['$scope', '$location', 'Issue', function($scope, $location, Issue){
+.controller('NewIssueCtrl', ['$state', '$scope', 'Issue', function($state, $scope, Issue){
   $scope.issue = new Issue();
 
   $scope.create = function(issue) {
-    $scope.issue.$save(function(issue) {
-      $location.path('/issues/' + issue.id);
-    });
+    if ($scope.issueForm.$valid) {
+      $scope.issue.$save(function(issue) {
+        $state.go('issue-detail', { id: issue.id });
+      });
+    }
   };
 }])
 .controller('IssueDetailCtrl', ['$scope', '$location', 'Issue', function($scope, $location, Issue) {
