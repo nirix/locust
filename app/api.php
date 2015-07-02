@@ -3,6 +3,22 @@ require __DIR__ . '/vendor/autoload.php';
 
 $config = require "config.php";
 
+/**
+ * Get input and decode into an array.
+ *
+ * @return array
+ */
+function ng()
+{
+    static $ng;
+
+    if (!$ng) {
+        return $ng = json_decode(file_get_contents('php://input'), true);
+    }
+
+    return $ng;
+}
+
 // Database connection
 switch ($config['driver']) {
     case 'pgsql':
@@ -43,11 +59,9 @@ get('/issues.json', function () use ($db) {
 
 // Create issue
 post('/issues.json', function () use ($db) {
-    $_NG = json_decode(file_get_contents('php://input'), true);
-
     $data = [
-        'summary'     => $_NG['summary'],
-        'description' => $_NG['description'],
+        'summary'     => ng()['summary'],
+        'description' => ng()['description'],
         'version_id'  => 1,
         'user_id'     => 0
     ];
