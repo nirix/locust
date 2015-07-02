@@ -3,6 +3,40 @@ require __DIR__ . '/vendor/autoload.php';
 
 $config = require "config.php";
 
+// -----------------------------------------------------------------------------
+// Database connection
+switch ($config['driver']) {
+    case 'pgsql':
+    case 'mysql':
+        $db = new PDO(
+            "{$config['driver']}:host={$config['host']};dbname={$config['dbname']}",
+            $config['user'],
+            $config['password']
+        );
+        break;
+
+    default:
+        die("Unsupported database driver.");
+}
+
+// -----------------------------------------------------------------------------
+// Things to make things easier
+
+function currentUser()
+{
+    global $db;
+    static $currentUser;
+
+    if (isset($_COOKIE['locust_session']) && !$currentUser) {
+        $user = $db->prepare("SELECT * FROM users WHERE session_hash = ? LIMIT 1");
+        $user->execute([$_COOKIE['locust_session']]);
+
+        return $currentUser = $user->fetch(PDO::FETCH_ASSOC);
+    }
+
+    return $currentUser;
+}
+
 /**
  * Get input and decode into an array.
  *
@@ -19,20 +53,38 @@ function ng()
     return $ng;
 }
 
-// Database connection
-switch ($config['driver']) {
-    case 'pgsql':
-    case 'mysql':
-        $db = new PDO(
-            "{$config['driver']}:host={$config['host']};dbname={$config['dbname']}",
-            $config['user'],
-            $config['password']
-        );
-        break;
+// -----------------------------------------------------------------------------
+// Users
+post('/login', function () use ($db) {
+    $user = $db->prepare("SELECT * FROM users WHERE username = ? AND password = ? LIMIT 1");
 
-    default:
-        die("Unsupported database driver.");
-}
+    $user->execute([
+        ng()['username'],
+        ng()['password'],
+    ]);
+
+    if ($data = $user->fetch(PDO::FETCH_ASSOC)) {
+        unset($data['password']);
+
+        setcookie('locust_session', $data['session_hash'], 0, '/', null, false, true);
+        unset($data['session_hash']);
+
+        echo json_encode($data);
+    } else {
+        http_response_code(401);
+    }
+});
+
+get('/profile', function () use ($db) {
+    if (isset($_COOKIE['locust_session'])) {
+        $user = $db->prepare("SELECT * FROM users WHERE session_hash = ? LIMIT 1");
+        $user->execute([$_COOKIE['locust_session']]);
+
+        echo json_encode($user->fetch(PDO::FETCH_ASSOC));
+    } else {
+        http_response_code(401);
+    }
+});
 
 // -----------------------------------------------------------------------------
 // Roadmap
@@ -59,11 +111,16 @@ get('/issues.json', function () use ($db) {
 
 // Create issue
 post('/issues.json', function () use ($db) {
+    // Check if logged in
+    if (!currentUser()) {
+        return http_response_code(401);
+    }
+
     $data = [
         'summary'     => ng()['summary'],
         'description' => ng()['description'],
         'version_id'  => 1,
-        'user_id'     => 0
+        'user_id'     => currentUser()['id']
     ];
 
     $error = false;
@@ -94,6 +151,11 @@ post('/issues.json', function () use ($db) {
 
 // Delete issue
 delete('/issues.json', function () use ($db) {
+    // Check if logged in and is admin
+    if (!currentUser() || currentUser()['role'] != 'admin') {
+        return http_response_code(401);
+    }
+
     $id = $_REQUEST['id'];
     $result = $db->prepare("DELETE FROM issues WHERE id = ?")->execute([$id]);
 });
