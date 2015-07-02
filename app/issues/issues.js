@@ -14,7 +14,7 @@ angular.module('locust.issues', ['ngRoute'])
 
     $routeProvider.when('/issues/:issueId', {
       templateUrl: 'issues/show.html',
-      controller: 'IssuesDetailCtrl'
+      controller: 'IssueDetailCtrl'
     })
   }])
   .controller('IssuesCtrl', ['$scope', 'Issue', function($scope, Issue) {
