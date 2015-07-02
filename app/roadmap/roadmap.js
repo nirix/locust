@@ -1,21 +1,27 @@
 'use strict';
 
-angular.module('locust.roadmap', ['ngRoute'])
-  .config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('/roadmap', {
-      templateUrl: 'roadmap/index.html',
-      controller: 'RoadmapCtrl'
-    });
+angular.module('locust.roadmap', ['ui.router'])
+.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+  $stateProvider
 
-    $routeProvider.when('/roadmap/:versionId', {
-      templateUrl: 'roadmap/show.html',
-      controller: 'RoadmapDetailCtrl'
-    });
-  }])
-  .controller('RoadmapCtrl', ['$scope', 'Version', function($scope, Version) {
-    $scope.versions = Version.query();
-    $scope.orderProp = 'display_order';
-  }])
-  .controller('RoadmapDetailCtrl', ['$scope', '$routeParams', 'Version', function($scope, $routeParams, Version) {
-    $scope.version = Version.get({ versionId: $routeParams.versionId });
-  }])
+  // Roadmap index
+  .state('roadmap', {
+    url: '/roadmap',
+    templateUrl: 'roadmap/index.html',
+    controller: 'RoadmapCtrl'
+  })
+
+  // Show version
+  .state('roadmap-detail', {
+    url: '/roadmap/:slug',
+    templateUrl: 'roadmap/show.html',
+    controller: 'RoadmapDetailCtrl'
+  });
+}])
+.controller('RoadmapCtrl', ['$scope', 'Version', function($scope, Version) {
+  $scope.versions = Version.query();
+  $scope.orderProp = 'display_order';
+}])
+.controller('RoadmapDetailCtrl', ['$scope', 'Version', function($scope, Version) {
+  $scope.version = Version.get({ slug: $scope.$stateParams.slug });
+}]);

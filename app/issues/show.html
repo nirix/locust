@@ -1,6 +1,6 @@
 <div class="issue-show container" ng-controller="IssueDetailCtrl">
 	<div class="pull-right">
-		<button ng-click="delete()" class="btn btn-danger btn-md">Delete</button>
+		<button ng-click="delete()" class="btn btn-danger btn-md" ng-if="isAuthorised(userRoles.admin)">Delete</button>
 	</div>
 
 	<div class="issue">
