@@ -1,9 +1,9 @@
 'use strict';
 
-var services = angular.module('authServices', ['ngResource']);
+angular.module('locust.auth')
 
 // Constants
-services.constant('AUTH_EVENTS', {
+.constant('AUTH_EVENTS', {
   loginSuccess: 'auth-login-success',
   loginFailed: 'auth-login-failed',
   logoutSuccess: 'auth-logout-success',
@@ -15,10 +15,10 @@ services.constant('AUTH_EVENTS', {
   admin: 'admin',
   user: 'user',
   guest: 'guest'
-});
+})
 
 // AuthSession
-services.service('AuthSession', function($http) {
+.service('AuthSession', function($http) {
   this.create = function(userId, userRole) {
     this.userId   = userId;
     this.userRole = userRole;
@@ -28,10 +28,10 @@ services.service('AuthSession', function($http) {
     this.userId   = null;
     this.userRole = null;
   };
-});
+})
 
 // AuthService
-services.factory('AuthService', function($http, AuthSession) {
+.factory('AuthService', function($http, AuthSession) {
   var authService = {};
 
   authService.login = function(credentials) {
@@ -69,10 +69,10 @@ services.factory('AuthService', function($http, AuthSession) {
   };
 
   return authService;
-});
+})
 
 // AuthResolver
-services.factory('AuthResolver', function($q, $rootScope, $state) {
+.factory('AuthResolver', function($q, $rootScope, $state) {
   return {
     resolve: function() {
       var deferred = $q.defer();

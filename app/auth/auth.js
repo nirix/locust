@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('locust.auth', ['ui.router'])
+angular.module('locust.auth', ['ui.router', 'ngResource'])
 .config(function($stateProvider) {
   $stateProvider.state('login', {
     url: '/login',

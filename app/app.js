@@ -4,7 +4,6 @@ window.apiPath = 'api.php/';
 
 angular.module('locust', [
   'ui.router',
-  'authServices',
   'locust.auth',
   'locust.roadmap',
   'locust.issues'
