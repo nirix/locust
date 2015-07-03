@@ -1,12 +1,28 @@
 <?php
+/*!
+ * Locust
+ * Copyright 2015 Jack Polgar
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
+use Locust\Models\Issue;
 
 // -----------------------------------------------------------------------------
 // Issues
 get('/issues.json', function () use ($db) {
-    $issues = $db->prepare("SELECT * FROM issues");
-    $issues->execute();
-    echo json_encode($issues->fetchAll(PDO::FETCH_ASSOC));
+    $issues = Issue::all();
+    echo json_encode($issues);
 });
 
 // Create issue
@@ -17,35 +33,19 @@ post('/issues.json', function () use ($db) {
     }
 
     $data = [
-        'summary'     => ng()['summary'],
-        'description' => ng()['description'],
-        'version_id'  => 1,
+        'summary'     => ng('summary'),
+        'description' => ng('description'),
+        'version_id'  => ng('version_id'),
         'user_id'     => currentUser()['id']
     ];
 
-    $error = false;
-    foreach (['summary', 'description'] as $field) {
-        if (empty($data[$field])) {
-            $error = true;
-        }
-    }
+    $issue = new Issue($data);
 
-    if (!$error) {
-        $result = $db->prepare("INSERT INTO issues
-            (summary, description, version_id, user_id, created_at, updated_at)
-            VALUES(
-                :summary,
-                :description,
-                :version_id,
-                :user_id,
-                NOW(),
-                NOW()
-            )
-        ")
-        ->execute($data);
-
-        $lastInserted = $db->query("SELECT * FROM issues ORDER BY id DESC LIMIT 1");
-        echo json_encode($lastInserted->fetch(PDO::FETCH_ASSOC));
+    if ($issue->save()) {
+        echo json_encode($issue);
+    } else {
+        http_response_code(400);
+        echo json_encode($issue->errors());
     }
 });
 
@@ -56,12 +56,11 @@ delete('/issues/(\d+).json', function ($id) use ($db) {
         return http_response_code(currentUser() ? 401 : 403);
     }
 
-    $result = $db->prepare("DELETE FROM issues WHERE id = ?")->execute([$id]);
+    $issue = Issue::find($id)->delete();
 });
 
 // Show issue
 get('/issues/(\d+).json', function ($id) use ($db) {
-    $issue = $db->prepare("SELECT * FROM issues WHERE id = ? LIMIT 1");
-    $issue->execute([$id]);
-    echo json_encode($issue->fetch(PDO::FETCH_ASSOC));
+    $issue = Issue::find($id);
+    echo json_encode($issue);
 });
