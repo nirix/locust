@@ -27,6 +27,10 @@ angular.module('locust.auth', ['ui.router', 'ngResource'])
     password: null
   };
 
+  $scope.hideError = function() {
+    $scope.showError = false;
+  };
+
   $scope.login = function(credentials) {
     AuthService.login(credentials).then(function(user) {
       $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
@@ -34,6 +38,7 @@ angular.module('locust.auth', ['ui.router', 'ngResource'])
       $location.path('/');
     },
     function() {
+      $scope.showError = true;
       $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
     });
   };
