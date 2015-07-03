@@ -20,6 +20,25 @@ use Locust\Models\User;
 
 // -----------------------------------------------------------------------------
 // Users
+
+// Create user
+post('/users.json', function () {
+    $user = new User([
+        'username' => ng('username'),
+        'password' => ng('password'),
+        'email'    => ng('email'),
+        'role'     => "user"
+    ]);
+
+    if ($user->save()) {
+        echo json_encode($user);
+    } else {
+        http_response_code(400);
+        echo json_encode($user->errors);
+    }
+});
+
+// Login
 post('/login', function () {
     $user = User::find('username', ng('username'));
 
@@ -31,6 +50,7 @@ post('/login', function () {
     }
 });
 
+// Profile
 get('/profile', function () {
     if (isset($_COOKIE['locust_session'])) {
         $user = User::find('session_hash', $_COOKIE['locust_session']);
@@ -40,6 +60,7 @@ get('/profile', function () {
     }
 });
 
+// Logout
 delete('/logout', function () {
     setcookie('locust_session', null, 0, '/', null, false, true);
 });

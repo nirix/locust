@@ -15,6 +15,11 @@ angular.module('locust.auth', ['ui.router', 'ngResource'])
       $location.path('/');
     }
   });
+
+  $stateProvider.state('register', {
+    url: '/register',
+    templateUrl: 'auth/register.html'
+  });
 })
 .controller('LoginController', function($scope, $rootScope, $location, AUTH_EVENTS, AuthService) {
   $scope.credentials = {
@@ -31,5 +36,17 @@ angular.module('locust.auth', ['ui.router', 'ngResource'])
     function() {
       $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
     });
+  };
+})
+.controller('RegisterController', function($scope, $location, AuthUser) {
+  $scope.user = new AuthUser();
+
+  $scope.create = function(user) {
+
+    if ($scope.userForm.$valid) {
+      $scope.user.$save(function(user) {
+        $location.path('/');
+      });
+    }
   };
 });

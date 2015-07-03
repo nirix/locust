@@ -19,12 +19,27 @@
 namespace Locust\Models;
 
 use Avalon\Database\Model;
+use Avalon\Database\Model\SecurePassword;
 
 /**
  * User model.
  */
 class User extends Model
 {
+    use SecurePassword;
+
+    /**
+     * Property to use for the secure password trait.
+     *
+     * @var string
+     */
+    protected $securePasswordField = 'password';
+
+    /**
+     * Validations.
+     *
+     * @var array
+     */
     protected static $_validates = [
         'username' => ['required'],
         'password' => ['required'],
@@ -32,18 +47,13 @@ class User extends Model
     ];
 
     /**
-     * Authenticate the user.
+     * Before actions.
      *
-     * @param string $password
-     *
-     * @return boolean
-     *
-     * @todo Use bcrypt
+     * @var array
      */
-    public function authenticate($password)
-    {
-        return $this->password === $password;
-    }
+    protected static $_before = [
+        'create' => ['preparePassword', 'generateSessionHash']
+    ];
 
     /**
      * @return array
@@ -53,5 +63,13 @@ class User extends Model
         $data = $this->getData();
         unset($data['password'], $data['session_hash']);
         return $data;
+    }
+
+    /**
+     * Generate session hash.
+     */
+    protected function generateSessionHash()
+    {
+        $this->session_hash = sha1($this->email . time() . rand(0, 1000) . microtime());
     }
 }

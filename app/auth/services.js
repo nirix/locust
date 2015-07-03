@@ -30,6 +30,11 @@ angular.module('locust.auth')
   };
 })
 
+// AuthUser
+.factory('AuthUser', function($window, $resource) {
+  return $resource($window.apiPath + 'users/:id.json');
+})
+
 // AuthService
 .factory('AuthService', function($http, AuthSession) {
   var authService = {};
