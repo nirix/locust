@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('locust.issues', ['ui.router'])
+angular.module('locust.issues', ['ui.router', 'ngResource'])
 .config(function($stateProvider, $urlRouterProvider, USER_ROLES) {
   $stateProvider
 

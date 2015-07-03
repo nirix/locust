@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('locust.roadmap', ['ui.router'])
+angular.module('locust.roadmap', ['ui.router', 'ngResource'])
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
