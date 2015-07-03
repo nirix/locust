@@ -50,8 +50,11 @@ angular.module('locust.issues', ['ui.router'])
 })
 
 // Show issue controller
-.controller('IssueDetailController', function($scope, $location, Issue) {
-  $scope.issue = Issue.get({ id: $scope.$stateParams.id });
+.controller('IssueDetailController', function($scope, $location, $sce, Issue) {
+  $scope.issue = Issue.get({ id: $scope.$stateParams.id }, function() {
+    $scope.issueDescription = $sce.trustAsHtml(marked($scope.issue.description || ''));
+  });
+
   $scope.delete = function() {
     $scope.issue.$delete(function() {
       $location.path('/issues');

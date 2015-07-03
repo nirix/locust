@@ -8,6 +8,7 @@
     "angular-resource": "~1.4.0",
     "angular-loader": "~1.4.0",
     "angular-mocks": "~1.4.0",
-    "angular-ui-router": "~0.2.15"
+    "angular-ui-router": "~0.2.15",
+    "marked": "~0.3.3"
   }
 }
