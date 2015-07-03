@@ -87,9 +87,16 @@ get('/profile', function () use ($db) {
 });
 
 // -----------------------------------------------------------------------------
-// Roadmap
+// Roadmap (open)
 get('/roadmap.json', function () use ($db) {
-    $versions = $db->prepare("SELECT * FROM versions ORDER BY display_order");
+    $versions = $db->prepare("SELECT * FROM versions WHERE is_completed = 0 ORDER BY display_order");
+    $versions->execute();
+    echo json_encode($versions->fetchAll(PDO::FETCH_ASSOC));
+});
+
+// Completed versions
+get('/roadmap/completed.json', function() use ($db) {
+    $versions = $db->prepare("SELECT * FROM versions WHERE is_completed = 1 ORDER BY display_order");
     $versions->execute();
     echo json_encode($versions->fetchAll(PDO::FETCH_ASSOC));
 });
