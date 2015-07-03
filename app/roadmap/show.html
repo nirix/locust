@@ -1,3 +1,7 @@
 <div class="roadmap-version container" ng-controller="RoadmapDetailController">
+	<div class="pull-right">
+		<button class="btn btn-danger" ng-click="delete()" ng-if="isAuthorised(userRoles.admin)">Delete</button>
+	</div>
+
 	<h1 class="page-header">{{version.name}}</h1>
 </div>

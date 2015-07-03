@@ -38,6 +38,12 @@ angular.module('locust.roadmap', ['ui.router'])
 })
 
 // Show version controller
-.controller('RoadmapDetailController', function($scope, Version) {
+.controller('RoadmapDetailController', function($scope, $state, Version) {
   $scope.version = Version.get({ slug: $scope.$stateParams.slug });
+
+  $scope.delete = function() {
+    $scope.version.$delete(function() {
+      $state.go('roadmap');
+    });
+  };
 });

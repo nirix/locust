@@ -61,3 +61,13 @@ get('/roadmap/(.*).json', function ($slug) {
     $version = Version::find('slug', $slug);
     echo json_encode($version);
 });
+
+// Delete version
+delete('/roadmap/(.*).json', function ($slug) {
+    // Check if logged in and is admin
+    if (!currentUser() || currentUser()['role'] != 'admin') {
+        return http_response_code(currentUser() ? 401 : 403);
+    }
+
+    $version = Version::find('slug', $slug)->delete();
+});

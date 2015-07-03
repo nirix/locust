@@ -16,5 +16,12 @@ locustServices.factory('Issue', function($resource) {
 
 // Versions
 locustServices.factory('Version', function($resource) {
-  return $resource(window.apiPath + 'roadmap/:slug.json');
+  return $resource(window.apiPath + 'roadmap/:slug.json', {}, {
+    delete: {
+      method: 'DELETE',
+      params: {
+        slug: "@slug"
+      }
+    }
+  });
 });
