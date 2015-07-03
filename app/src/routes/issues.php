@@ -20,13 +20,13 @@ use Locust\Models\Issue;
 
 // -----------------------------------------------------------------------------
 // Issues
-get('/issues.json', function () use ($db) {
+get('/issues.json', function () {
     $issues = Issue::all();
     echo json_encode($issues);
 });
 
 // Create issue
-post('/issues.json', function () use ($db) {
+post('/issues.json', function () {
     // Check if logged in
     if (!currentUser()) {
         return http_response_code(401);
@@ -50,7 +50,7 @@ post('/issues.json', function () use ($db) {
 });
 
 // Delete issue
-delete('/issues/(\d+).json', function ($id) use ($db) {
+delete('/issues/(\d+).json', function ($id) {
     // Check if logged in and is admin
     if (!currentUser() || currentUser()['role'] != 'admin') {
         return http_response_code(currentUser() ? 401 : 403);
@@ -60,7 +60,7 @@ delete('/issues/(\d+).json', function ($id) use ($db) {
 });
 
 // Show issue
-get('/issues/(\d+).json', function ($id) use ($db) {
+get('/issues/(\d+).json', function ($id) {
     $issue = Issue::find($id);
     echo json_encode($issue);
 });

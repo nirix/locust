@@ -20,19 +20,19 @@ use Locust\Models\Version;
 
 // -----------------------------------------------------------------------------
 // Roadmap (active versions)
-get('/roadmap.json', function () use ($db) {
+get('/roadmap.json', function () {
     $versions = Version::select()->orderBy('display_order')->fetchAll();
     echo json_encode($versions);
 });
 
 // Completed versions
-get('/roadmap/completed.json', function () use ($db) {
+get('/roadmap/completed.json', function () {
     $versions = Version::where('is_completed', 1)->orderBy('display_order')->fetchAll();
     echo json_encode($versions);
 });
 
 // Create version
-post('/roadmap.json', function () use ($db) {
+post('/roadmap.json', function () {
     // Check if logged in and is admin
     if (!currentUser() || currentUser()['role'] != 'admin') {
         return http_response_code(currentUser() ? 401 : 403);
@@ -57,7 +57,7 @@ post('/roadmap.json', function () use ($db) {
 });
 
 // Show version
-get('/roadmap/(.*).json', function ($slug) use ($db) {
+get('/roadmap/(.*).json', function ($slug) {
     $version = Version::find('slug', $slug);
     echo json_encode($version);
 });
