@@ -40,7 +40,7 @@ post('/users.json', function () {
 
 // Login
 post('/login', function () {
-    $user = User::find('username', ng('username'));
+    $user = User::find('username', ng('username', ''));
 
     if ($user && $user->authenticate(ng('password'))) {
         setcookie('locust_session', $user->session_hash, 0, '/', null, false, true);

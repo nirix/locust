@@ -41,7 +41,7 @@ function currentUser()
  *
  * @return array
  */
-function ng($index = null)
+function ng($index = null, $default = null)
 {
     static $ng;
 
@@ -50,7 +50,7 @@ function ng($index = null)
     }
 
     if ($index) {
-        return isset($ng[$index]) ? $ng[$index] : null;
+        return isset($ng[$index]) ? $ng[$index] : $default;
     } else {
         return $ng;
     }
