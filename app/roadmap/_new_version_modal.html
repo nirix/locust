@@ -1,0 +1,19 @@
+<div id="newVersionModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="newVersionModalLabel" ng-controller="NewVersionController">
+	<form name="versionForm" method="post" role="form" class="form-horizontal" ng-submit="create(version)" novalidate>
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+					<h2 class="modal-title">New Version</h2>
+				</div>
+				<div class="modal-body">
+					<div ng-include="'roadmap/_form.html'"></div>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-default" data-dismiss="modal">Close</button>
+					<button class="btn btn-success" ng-disabled="versionForm.$invalid">Create</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
