@@ -4,15 +4,18 @@ window.apiPath = 'api.php/';
 
 angular.module('locust', [
   'ui.router',
-  'locustServices',
   'authServices',
   'locust.auth',
   'locust.roadmap',
   'locust.issues'
 ])
+
+// Config
 .config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/roadmap');
 })
+
+// Run
 .run(function($state, $stateParams, $rootScope, AUTH_EVENTS, USER_ROLES, AuthService) {
   $rootScope.$state       = $state;
   $rootScope.$stateParams = $stateParams;

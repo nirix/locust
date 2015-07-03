@@ -1,22 +1,31 @@
 <?php
+/*!
+ * Locust
+ * Copyright 2015 Jack Polgar
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+use Locust\Models\User;
 
 // -----------------------------------------------------------------------------
 // Users
-post('/login', function () use ($db) {
-    $user = $db->prepare("SELECT * FROM users WHERE username = ? AND password = ? LIMIT 1");
+post('/login', function () {
+    $user = User::find('username', ng('username'));
 
-    $user->execute([
-        ng()['username'],
-        ng()['password'],
-    ]);
-
-    if ($data = $user->fetch(PDO::FETCH_ASSOC)) {
-        unset($data['password']);
-
-        setcookie('locust_session', $data['session_hash'], 0, '/', null, false, true);
-        unset($data['session_hash']);
-
-        echo json_encode($data);
+    if ($user && $user->authenticate(ng('password'))) {
+        setcookie('locust_session', $user->session_hash, 0, '/', null, false, true);
+        echo json_encode($user->toArray());
     } else {
         http_response_code(401);
     }
@@ -24,10 +33,8 @@ post('/login', function () use ($db) {
 
 get('/profile', function () use ($db) {
     if (isset($_COOKIE['locust_session'])) {
-        $user = $db->prepare("SELECT * FROM users WHERE session_hash = ? LIMIT 1");
-        $user->execute([$_COOKIE['locust_session']]);
-
-        echo json_encode($user->fetch(PDO::FETCH_ASSOC));
+        $user = User::find('session_hash', $_COOKIE['locust_session']);
+        echo json_encode($user->toArray());
     } else {
         http_response_code(401);
     }
