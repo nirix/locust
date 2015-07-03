@@ -31,7 +31,7 @@ services.service('Session', function() {
 });
 
 // AuthService
-services.factory('AuthService', ['$http', 'Session', function($http, Session) {
+services.factory('AuthService', function($http, Session) {
   var authService = {};
 
   authService.login = function(credentials) {
@@ -63,9 +63,9 @@ services.factory('AuthService', ['$http', 'Session', function($http, Session) {
   };
 
   return authService;
-}]);
+});
 
-services.factory('AuthResolver', ['$q', '$rootScope', '$state', function($q, $rootScope, $state) {
+services.factory('AuthResolver', function($q, $rootScope, $state) {
   return {
     resolve: function() {
       var deferred = $q.defer();
@@ -83,4 +83,4 @@ services.factory('AuthResolver', ['$q', '$rootScope', '$state', function($q, $ro
       return deferred.promise;
     }
   };
-}]);
+});

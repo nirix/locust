@@ -1,8 +1,7 @@
 'use strict';
 
 angular.module('locust.issues', ['ui.router'])
-.config(['$stateProvider', '$urlRouterProvider', 'USER_ROLES',
-         function($stateProvider, $urlRouterProvider, USER_ROLES) {
+.config(function($stateProvider, $urlRouterProvider, USER_ROLES) {
   $stateProvider
 
   // Issues index
@@ -28,11 +27,15 @@ angular.module('locust.issues', ['ui.router'])
     templateUrl: 'issues/show.html',
     controller: 'IssueDetailCtrl'
   });
-}])
-.controller('IssuesCtrl', ['$scope', 'Issue', function($scope, Issue) {
+})
+
+// Issues index controller
+.controller('IssuesCtrl', function($scope, Issue) {
   $scope.issues = Issue.query();
-}])
-.controller('NewIssueCtrl', ['$state', '$scope', 'Issue', function($state, $scope, Issue){
+})
+
+// New issue controller
+.controller('NewIssueCtrl', function($state, $scope, Issue){
   $scope.issue = new Issue();
 
   $scope.create = function(issue) {
@@ -42,12 +45,14 @@ angular.module('locust.issues', ['ui.router'])
       });
     }
   };
-}])
-.controller('IssueDetailCtrl', ['$scope', '$location', 'Issue', function($scope, $location, Issue) {
+})
+
+// Show issue controller
+.controller('IssueDetailCtrl', function($scope, $location, Issue) {
   $scope.issue = Issue.get({ id: $scope.$stateParams.id });
   $scope.delete = function() {
     $scope.issue.$delete(function() {
       $location.path('/issues');
     });
   };
-}]);
+});

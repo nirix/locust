@@ -1,15 +1,14 @@
 'use strict';
 
 angular.module('locust.auth', ['ui.router'])
-.config(['$stateProvider', function($stateProvider) {
+.config(function($stateProvider) {
   $stateProvider.state('login', {
     url: '/login',
     templateUrl: 'auth/login.html',
     controller: 'LoginCtrl'
   });
-}])
-.controller('LoginCtrl', ['$scope', '$rootScope', '$location', 'AUTH_EVENTS', 'AuthService',
-                          function($scope, $rootScope, $location, AUTH_EVENTS, AuthService) {
+})
+.controller('LoginCtrl', function($scope, $rootScope, $location, AUTH_EVENTS, AuthService) {
   $scope.credentials = {
     username: null,
     password: null
@@ -25,4 +24,4 @@ angular.module('locust.auth', ['ui.router'])
       $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
     });
   };
-}]);
+});

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('locust.roadmap', ['ui.router'])
-.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
   // Roadmap index
@@ -17,11 +17,11 @@ angular.module('locust.roadmap', ['ui.router'])
     templateUrl: 'roadmap/show.html',
     controller: 'RoadmapDetailCtrl'
   });
-}])
-.controller('RoadmapCtrl', ['$scope', 'Version', function($scope, Version) {
+})
+.controller('RoadmapCtrl', function($scope, Version) {
   $scope.versions = Version.query();
   $scope.orderProp = 'display_order';
-}])
-.controller('RoadmapDetailCtrl', ['$scope', 'Version', function($scope, Version) {
+})
+.controller('RoadmapDetailCtrl', function($scope, Version) {
   $scope.version = Version.get({ slug: $scope.$stateParams.slug });
-}]);
+});

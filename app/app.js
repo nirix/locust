@@ -10,11 +10,10 @@ angular.module('locust', [
   'locust.roadmap',
   'locust.issues'
 ])
-.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/roadmap');
-}])
-.run(['$state', '$stateParams', '$rootScope', 'AUTH_EVENTS', 'AuthService',
-      function($state, $stateParams, $rootScope, AUTH_EVENTS, AuthService) {
+})
+.run(function($state, $stateParams, $rootScope, AUTH_EVENTS, AuthService) {
 
   $rootScope.$state       = $state;
   $rootScope.$stateParams = $stateParams;
@@ -36,8 +35,8 @@ angular.module('locust', [
       }
     }
   });
-}])
-.controller('ApplicationCtrl', ['$scope', '$http', 'USER_ROLES', 'AuthService', function($scope, $http, USER_ROLES, AuthService) {
+})
+.controller('ApplicationCtrl', function($scope, $http, USER_ROLES, AuthService) {
   $scope.currentUser  = null;
   $scope.userRoles    = USER_ROLES;
   $scope.isAuthorised = AuthService.isAuthorised;
@@ -49,4 +48,4 @@ angular.module('locust', [
   AuthService.getCurrentUser().then(function(user) {
     $scope.setCurrentUser(user);
   });
-}]);
+});

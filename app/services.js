@@ -3,7 +3,7 @@
 var locustServices = angular.module('locustServices', ['ngResource']);
 
 // Issues
-locustServices.factory('Issue', ['$resource', function($resource) {
+locustServices.factory('Issue', function($resource) {
   return $resource(window.apiPath + 'issues/:id.json', {}, {
     delete: {
       method: 'DELETE',
@@ -12,9 +12,9 @@ locustServices.factory('Issue', ['$resource', function($resource) {
       }
     }
   });
-}]);
+});
 
 // Versions
-locustServices.factory('Version', ['$resource', function($resource) {
+locustServices.factory('Version', function($resource) {
   return $resource(window.apiPath + 'roadmap/:slug.json');
-}]);
+});
