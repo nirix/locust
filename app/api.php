@@ -157,13 +157,12 @@ post('/issues.json', function () use ($db) {
 });
 
 // Delete issue
-delete('/issues.json', function () use ($db) {
+delete('/issues/(\d+).json', function ($id) use ($db) {
     // Check if logged in and is admin
     if (!currentUser() || currentUser()['role'] != 'admin') {
         return http_response_code(401);
     }
 
-    $id = $_REQUEST['id'];
     $result = $db->prepare("DELETE FROM issues WHERE id = ?")->execute([$id]);
 });
 
