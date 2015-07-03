@@ -7,21 +7,19 @@ angular.module('locust.roadmap', ['ui.router'])
   // Roadmap index
   .state('roadmap', {
     url: '/roadmap',
-    templateUrl: 'roadmap/index.html',
-    controller: 'RoadmapCtrl'
+    templateUrl: 'roadmap/index.html'
   })
 
   // Show version
   .state('roadmap-detail', {
     url: '/roadmap/:slug',
-    templateUrl: 'roadmap/show.html',
-    controller: 'RoadmapDetailCtrl'
+    templateUrl: 'roadmap/show.html'
   });
 })
-.controller('RoadmapCtrl', function($scope, Version) {
+.controller('RoadmapController', function($scope, Version) {
   $scope.versions = Version.query();
   $scope.orderProp = 'display_order';
 })
-.controller('RoadmapDetailCtrl', function($scope, Version) {
+.controller('RoadmapDetailController', function($scope, Version) {
   $scope.version = Version.get({ slug: $scope.$stateParams.slug });
 });

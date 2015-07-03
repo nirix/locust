@@ -7,15 +7,13 @@ angular.module('locust.issues', ['ui.router'])
   // Issues index
   .state('issues', {
     url: '/issues',
-    templateUrl: 'issues/index.html',
-    controller: 'IssuesCtrl'
+    templateUrl: 'issues/index.html'
   })
 
   // New issue
   .state('new-issue', {
     url: '/issues/new',
     templateUrl: 'issues/new.html',
-    controller: 'NewIssueCtrl',
     data: {
       authorisedRoles: [USER_ROLES.admin, USER_ROLES.user]
     },
@@ -29,18 +27,17 @@ angular.module('locust.issues', ['ui.router'])
   // Show issue
   .state('issue-detail', {
     url: '/issues/:id',
-    templateUrl: 'issues/show.html',
-    controller: 'IssueDetailCtrl'
+    templateUrl: 'issues/show.html'
   });
 })
 
 // Issues index controller
-.controller('IssuesCtrl', function($scope, Issue) {
+.controller('IssuesController', function($scope, Issue) {
   $scope.issues = Issue.query();
 })
 
 // New issue controller
-.controller('NewIssueCtrl', function($state, $scope, Issue){
+.controller('NewIssueController', function($state, $scope, Issue){
   $scope.issue = new Issue();
 
   $scope.create = function(issue) {
@@ -53,7 +50,7 @@ angular.module('locust.issues', ['ui.router'])
 })
 
 // Show issue controller
-.controller('IssueDetailCtrl', function($scope, $location, Issue) {
+.controller('IssueDetailController', function($scope, $location, Issue) {
   $scope.issue = Issue.get({ id: $scope.$stateParams.id });
   $scope.delete = function() {
     $scope.issue.$delete(function() {

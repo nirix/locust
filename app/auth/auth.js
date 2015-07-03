@@ -4,11 +4,10 @@ angular.module('locust.auth', ['ui.router'])
 .config(function($stateProvider) {
   $stateProvider.state('login', {
     url: '/login',
-    templateUrl: 'auth/login.html',
-    controller: 'LoginCtrl'
+    templateUrl: 'auth/login.html'
   });
 })
-.controller('LoginCtrl', function($scope, $rootScope, $location, AUTH_EVENTS, AuthService) {
+.controller('LoginController', function($scope, $rootScope, $location, AUTH_EVENTS, AuthService) {
   $scope.credentials = {
     username: null,
     password: null
