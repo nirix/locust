@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+files = Dir.glob('app/**/*.js').reject { |f| f.include? 'bower_components' }
+
+files.each do |f|
+  puts f
+  `ng-annotate -a --single_quotes #{f} -o #{f}`
+end
