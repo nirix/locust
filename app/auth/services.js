@@ -17,8 +17,8 @@ services.constant('AUTH_EVENTS', {
   guest: 'guest'
 });
 
-// Session
-services.service('Session', function() {
+// AuthSession
+services.service('AuthSession', function() {
   this.create = function(userId, userRole) {
     this.userId   = userId;
     this.userRole = userRole;
@@ -31,20 +31,20 @@ services.service('Session', function() {
 });
 
 // AuthService
-services.factory('AuthService', function($http, Session) {
+services.factory('AuthService', function($http, AuthSession) {
   var authService = {};
 
   authService.login = function(credentials) {
     return $http
       .post(window.apiPath + 'login', credentials)
       .then(function(response) {
-        Session.create(response.data.id, response.data.role);
+        AuthSession.create(response.data.id, response.data.role);
         return response.data;
       });
   };
 
   authService.isAuthenticated = function() {
-    return !!Session.userId;
+    return !!AuthSession.userId;
   };
 
   authService.isAuthorised = function(authorisedRoles) {
@@ -52,12 +52,12 @@ services.factory('AuthService', function($http, Session) {
       authorisedRoles = [authorisedRoles];
     }
 
-    return (authService.isAuthenticated() && authorisedRoles.indexOf(Session.userRole) !== -1);
+    return (authService.isAuthenticated() && authorisedRoles.indexOf(AuthSession.userRole) !== -1);
   };
 
   authService.getCurrentUser = function() {
     return $http.get(window.apiPath + 'profile').then(function(response) {
-      Session.create(response.data.id, response.data.role);
+      AuthSession.create(response.data.id, response.data.role);
       return response.data;
     });
   };
@@ -65,6 +65,7 @@ services.factory('AuthService', function($http, Session) {
   return authService;
 });
 
+// AuthResolver
 services.factory('AuthResolver', function($q, $rootScope, $state) {
   return {
     resolve: function() {
@@ -75,11 +76,13 @@ services.factory('AuthResolver', function($q, $rootScope, $state) {
             deferred.resolve(currentUser);
           } else {
             deferred.reject();
-            $state.go('user-login');
+            $state.go('login');
           }
+
           unwatch();
         }
       });
+
       return deferred.promise;
     }
   };

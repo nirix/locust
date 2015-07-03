@@ -13,12 +13,30 @@ angular.module('locust', [
 .config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/roadmap');
 })
-.run(function($state, $stateParams, $rootScope, AUTH_EVENTS, AuthService) {
-
+.run(function($state, $stateParams, $rootScope, AUTH_EVENTS, USER_ROLES, AuthService) {
   $rootScope.$state       = $state;
   $rootScope.$stateParams = $stateParams;
 
+  // $rootScope.currentUser  = null;
+  $rootScope.userRoles    = USER_ROLES;
+  $rootScope.isAuthorised = AuthService.isAuthorised;
+
+  $rootScope.setCurrentUser = function(user) {
+    $rootScope.currentUser = user;
+  };
+
+  AuthService.getCurrentUser().then(function(user) {
+    $rootScope.setCurrentUser(user);
+  }, function() {
+    $rootScope.currentUser = null;
+  });
+
   $rootScope.$on('$stateChangeStart', function(event, next) {
+    // Don't do anything unless 'currentUser' has been set
+    if (!angular.defiend($rootScope.currentUser)) {
+      return;
+    }
+
     if (next.data && next.data.authorisedRoles) {
       var authorisedRoles = next.data.authorisedRoles;
 
@@ -34,18 +52,5 @@ angular.module('locust', [
         $state.go('login');
       }
     }
-  });
-})
-.controller('ApplicationCtrl', function($scope, $http, USER_ROLES, AuthService) {
-  $scope.currentUser  = null;
-  $scope.userRoles    = USER_ROLES;
-  $scope.isAuthorised = AuthService.isAuthorised;
-
-  $scope.setCurrentUser = function(user) {
-    $scope.currentUser = user;
-  };
-
-  AuthService.getCurrentUser().then(function(user) {
-    $scope.setCurrentUser(user);
   });
 });

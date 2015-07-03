@@ -18,6 +18,11 @@ angular.module('locust.issues', ['ui.router'])
     controller: 'NewIssueCtrl',
     data: {
       authorisedRoles: [USER_ROLES.admin, USER_ROLES.user]
+    },
+    resolve: {
+      auth: function(AuthResolver) {
+        return AuthResolver.resolve();
+      }
     }
   })
 
