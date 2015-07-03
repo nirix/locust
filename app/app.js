@@ -33,7 +33,7 @@ angular.module('locust', [
 
   $rootScope.$on('$stateChangeStart', function(event, next) {
     // Don't do anything unless 'currentUser' has been set
-    if (!angular.defiend($rootScope.currentUser)) {
+    if (!angular.isDefined($rootScope.currentUser)) {
       return;
     }
 
