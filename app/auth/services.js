@@ -18,7 +18,7 @@ services.constant('AUTH_EVENTS', {
 });
 
 // AuthSession
-services.service('AuthSession', function() {
+services.service('AuthSession', function($http) {
   this.create = function(userId, userRole) {
     this.userId   = userId;
     this.userRole = userRole;
@@ -41,6 +41,12 @@ services.factory('AuthService', function($http, AuthSession) {
         AuthSession.create(response.data.id, response.data.role);
         return response.data;
       });
+  };
+
+  authService.logout = function() {
+    return $http.delete(window.apiPath + 'logout').then(function() {
+      AuthSession.destroy();
+    });
   };
 
   authService.isAuthenticated = function() {

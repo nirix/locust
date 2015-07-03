@@ -6,6 +6,15 @@ angular.module('locust.auth', ['ui.router'])
     url: '/login',
     templateUrl: 'auth/login.html'
   });
+
+  $stateProvider.state('logout', {
+    url: '/logout',
+    controller: function($rootScope, $location, AuthService) {
+      AuthService.logout();
+      $rootScope.setCurrentUser(null);
+      $location.path('/');
+    }
+  });
 })
 .controller('LoginController', function($scope, $rootScope, $location, AUTH_EVENTS, AuthService) {
   $scope.credentials = {

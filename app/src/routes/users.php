@@ -31,11 +31,15 @@ post('/login', function () {
     }
 });
 
-get('/profile', function () use ($db) {
+get('/profile', function () {
     if (isset($_COOKIE['locust_session'])) {
         $user = User::find('session_hash', $_COOKIE['locust_session']);
         echo json_encode($user->toArray());
     } else {
         http_response_code(401);
     }
+});
+
+delete('/logout', function () {
+    setcookie('locust_session', null, 0, '/', null, false, true);
 });
