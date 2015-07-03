@@ -52,8 +52,8 @@ post('/login', function () {
 
 // Profile
 get('/profile', function () {
-    if (isset($_COOKIE['locust_session'])) {
-        $user = User::find('session_hash', $_COOKIE['locust_session']);
+    if (isset($_COOKIE['locust_session'])
+    && $user = User::find('session_hash', $_COOKIE['locust_session'])) {
         echo json_encode($user->toArray());
     } else {
         http_response_code(401);
