@@ -1,8 +1,10 @@
 <?php
 return [
-    'driver'   => 'pgsql',
-    'host'     => 'localhost',
-    'dbname'   => 'locust',
-    'user'     => 'me',
-    'password' => ''
+    'database' => [
+        'driver'   => "pdo_pgsql",
+        'host'     => "localhost",
+        'user'     => "me",
+        'password' => "",
+        'dbname'   => "locust"
+    ]
 ];
