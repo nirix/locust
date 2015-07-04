@@ -1,6 +1,8 @@
-'use strict';
+(function(){'use strict';
 
 angular.module('locust.issues', ['ui.router', 'ngResource'])
+
+// Config
 .config(function($stateProvider, $urlRouterProvider, USER_ROLES) {
   $stateProvider
     // Issues index
@@ -63,3 +65,5 @@ angular.module('locust.issues', ['ui.router', 'ngResource'])
     });
   };
 });
+
+})();

@@ -1,6 +1,8 @@
-'use strict';
+(function(){'use strict';
 
 angular.module('locust.auth', ['ui.router', 'ngResource'])
+
+// Config
 .config(function($stateProvider) {
   $stateProvider
     // Login
@@ -25,6 +27,8 @@ angular.module('locust.auth', ['ui.router', 'ngResource'])
       templateUrl: 'views/auth/register.html'
     });
 })
+
+// Login controller
 .controller('LoginController', function($scope, $rootScope, $location, AUTH_EVENTS, AuthService) {
   $scope.credentials = {
     username: null,
@@ -47,6 +51,8 @@ angular.module('locust.auth', ['ui.router', 'ngResource'])
     });
   };
 })
+
+// Registration controller
 .controller('RegisterController', function($scope, $location, AuthUser) {
   $scope.user = new AuthUser();
 
@@ -59,3 +65,5 @@ angular.module('locust.auth', ['ui.router', 'ngResource'])
     }
   };
 });
+
+})();

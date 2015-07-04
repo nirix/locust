@@ -1,4 +1,4 @@
-'use strict';
+(function(){'use strict';
 
 angular.module('locust.auth')
 
@@ -98,3 +98,5 @@ angular.module('locust.auth')
     }
   };
 });
+
+})();

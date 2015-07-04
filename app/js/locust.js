@@ -1,4 +1,4 @@
-'use strict';
+(function(){'use strict';
 
 window.apiPath = 'api.php/';
 
@@ -56,3 +56,5 @@ angular.module('locust', [
     }
   });
 });
+
+})();

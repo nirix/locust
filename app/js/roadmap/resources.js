@@ -1,4 +1,4 @@
-'use strict';
+(function(){'use strict';
 
 angular.module('locust.roadmap')
 .factory('Version', function($resource) {
@@ -11,3 +11,5 @@ angular.module('locust.roadmap')
     }
   });
 });
+
+})();

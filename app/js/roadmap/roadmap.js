@@ -1,6 +1,8 @@
-'use strict';
+(function(){'use strict';
 
 angular.module('locust.roadmap', ['ui.router', 'ngResource'])
+
+// Config
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
     // Roadmap index
@@ -46,3 +48,5 @@ angular.module('locust.roadmap', ['ui.router', 'ngResource'])
     });
   };
 });
+
+})();
