@@ -1,5 +1,6 @@
 .DS_Store
 node_modules/
 app/config.php
+app/.htaccess
 app/vendor
 app/bower_components
