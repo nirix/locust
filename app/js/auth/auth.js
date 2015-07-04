@@ -2,24 +2,28 @@
 
 angular.module('locust.auth', ['ui.router', 'ngResource'])
 .config(function($stateProvider) {
-  $stateProvider.state('login', {
-    url: '/login',
-    templateUrl: 'views/auth/login.html'
-  });
+  $stateProvider
+    // Login
+    .state('login', {
+      url: '/login',
+      templateUrl: 'views/auth/login.html'
+    })
 
-  $stateProvider.state('logout', {
-    url: '/logout',
-    controller: function($rootScope, $location, AuthService) {
-      AuthService.logout();
-      $rootScope.setCurrentUser(null);
-      $location.path('/');
-    }
-  });
+    // Logout
+    .state('logout', {
+      url: '/logout',
+      controller: function($rootScope, $location, AuthService) {
+        AuthService.logout();
+        $rootScope.setCurrentUser(null);
+        $location.path('/');
+      }
+    })
 
-  $stateProvider.state('register', {
-    url: '/register',
-    templateUrl: 'views/auth/register.html'
-  });
+    // Register
+    .state('register', {
+      url: '/register',
+      templateUrl: 'views/auth/register.html'
+    });
 })
 .controller('LoginController', function($scope, $rootScope, $location, AUTH_EVENTS, AuthService) {
   $scope.credentials = {

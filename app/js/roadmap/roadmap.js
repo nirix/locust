@@ -3,18 +3,17 @@
 angular.module('locust.roadmap', ['ui.router', 'ngResource'])
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
+    // Roadmap index
+    .state('roadmap', {
+      url: '/roadmap',
+      templateUrl: 'views/roadmap/index.html'
+    })
 
-  // Roadmap index
-  .state('roadmap', {
-    url: '/roadmap',
-    templateUrl: 'views/roadmap/index.html'
-  })
-
-  // Show version
-  .state('roadmap-detail', {
-    url: '/roadmap/:slug',
-    templateUrl: 'views/roadmap/show.html'
-  });
+    // Show version
+    .state('roadmap-detail', {
+      url: '/roadmap/:slug',
+      templateUrl: 'views/roadmap/show.html'
+    });
 })
 
 // Roadmap index controller

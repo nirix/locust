@@ -3,32 +3,31 @@
 angular.module('locust.issues', ['ui.router', 'ngResource'])
 .config(function($stateProvider, $urlRouterProvider, USER_ROLES) {
   $stateProvider
+    // Issues index
+    .state('issues', {
+      url: '/issues',
+      templateUrl: 'views/issues/index.html'
+    })
 
-  // Issues index
-  .state('issues', {
-    url: '/issues',
-    templateUrl: 'views/issues/index.html'
-  })
-
-  // New issue
-  .state('new-issue', {
-    url: '/issues/new',
-    templateUrl: 'views/issues/new.html',
-    data: {
-      authorisedRoles: [USER_ROLES.admin, USER_ROLES.user]
-    },
-    resolve: {
-      auth: function(AuthResolver) {
-        return AuthResolver.resolve();
+    // New issue
+    .state('new-issue', {
+      url: '/issues/new',
+      templateUrl: 'views/issues/new.html',
+      data: {
+        authorisedRoles: [USER_ROLES.admin, USER_ROLES.user]
+      },
+      resolve: {
+        auth: function(AuthResolver) {
+          return AuthResolver.resolve();
+        }
       }
-    }
-  })
+    })
 
-  // Show issue
-  .state('issue-detail', {
-    url: '/issues/:id',
-    templateUrl: 'views/issues/show.html'
-  });
+    // Show issue
+    .state('issue-detail', {
+      url: '/issues/:id',
+      templateUrl: 'views/issues/show.html'
+    });
 })
 
 // Issues index controller
