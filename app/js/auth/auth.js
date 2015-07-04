@@ -4,7 +4,7 @@ angular.module('locust.auth', ['ui.router', 'ngResource'])
 .config(function($stateProvider) {
   $stateProvider.state('login', {
     url: '/login',
-    templateUrl: 'auth/login.html'
+    templateUrl: 'views/auth/login.html'
   });
 
   $stateProvider.state('logout', {
@@ -18,7 +18,7 @@ angular.module('locust.auth', ['ui.router', 'ngResource'])
 
   $stateProvider.state('register', {
     url: '/register',
-    templateUrl: 'auth/register.html'
+    templateUrl: 'views/auth/register.html'
   });
 })
 .controller('LoginController', function($scope, $rootScope, $location, AUTH_EVENTS, AuthService) {

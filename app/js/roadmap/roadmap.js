@@ -7,13 +7,13 @@ angular.module('locust.roadmap', ['ui.router', 'ngResource'])
   // Roadmap index
   .state('roadmap', {
     url: '/roadmap',
-    templateUrl: 'roadmap/index.html'
+    templateUrl: 'views/roadmap/index.html'
   })
 
   // Show version
   .state('roadmap-detail', {
     url: '/roadmap/:slug',
-    templateUrl: 'roadmap/show.html'
+    templateUrl: 'views/roadmap/show.html'
   });
 })
 

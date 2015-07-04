@@ -7,13 +7,13 @@ angular.module('locust.issues', ['ui.router', 'ngResource'])
   // Issues index
   .state('issues', {
     url: '/issues',
-    templateUrl: 'issues/index.html'
+    templateUrl: 'views/issues/index.html'
   })
 
   // New issue
   .state('new-issue', {
     url: '/issues/new',
-    templateUrl: 'issues/new.html',
+    templateUrl: 'views/issues/new.html',
     data: {
       authorisedRoles: [USER_ROLES.admin, USER_ROLES.user]
     },
@@ -27,7 +27,7 @@ angular.module('locust.issues', ['ui.router', 'ngResource'])
   // Show issue
   .state('issue-detail', {
     url: '/issues/:id',
-    templateUrl: 'issues/show.html'
+    templateUrl: 'views/issues/show.html'
   });
 })
 
