@@ -1,6 +1,6 @@
 <?php require __DIR__ . '/vendor/autoload.php'; ?>
 <!DOCTYPE html>
-<html lang="en" ng-app="locust">
+<html lang="en">
 	<head>
 		<meta charset="UTF-8">
 		<title>Locust</title>
@@ -8,7 +8,7 @@
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 		<base href="<?= Nanite::baseUri() ?>">
 	</head>
-	<body>
+	<body ng-app="locust">
 		<nav class="navbar navbar-default navbar-static-top">
 			<div class="container">
 				<div class="navbar-header">
