@@ -62,6 +62,32 @@ get('/roadmap/(.*).json', function ($slug) {
     echo json_encode($version);
 });
 
+post('/roadmap/(.*).json', function ($slug) {
+    // Check if logged in and is admin
+    if (!currentUser() || currentUser()['role'] != 'admin') {
+        return http_response_code(currentUser() ? 401 : 403);
+    }
+
+    if (ng('id') && $version = Version::find(ng('id'))) {
+        $version->set([
+            'name'          => ng('name'),
+            'slug'          => ng('slug'),
+            'description'   => ng('description'),
+            'display_order' => ng('display_order'),
+            'is_completed'  => ng('is_completed')
+        ]);
+
+        if ($version->save()) {
+            echo json_encode($version);
+        } else {
+            http_response_code(400);
+            echo json_encode($version->errors());
+        }
+    } else {
+        http_response_code(400);
+    }
+});
+
 // Delete version
 delete('/roadmap/(.*).json', function ($slug) {
     // Check if logged in and is admin

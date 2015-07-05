@@ -1,9 +1,25 @@
-<div class="roadmap-version container" ng-controller="RoadmapDetailController">
-	<div class="pull-right">
-		<button class="btn btn-danger" ng-click="delete()" ng-if="isAuthorised(userRoles.admin)">
-			<i class="fa fa-trash"></i> Delete
-		</button>
-	</div>
+<div ng-controller="RoadmapDetailController">
+	<div class="roadmap-version container">
+		<div class="pull-right">
+			<div class="btn-group btn-group-sm" role="group">
+			<button
+				class="btn btn-warning"
+				ng-click="edit()"
+				ng-if="isAuthorised(userRoles.admin)"
+				data-toggle="modal"
+				data-target="#editVersionModal"
+			>
+				<i class="fa fa-pencil"></i> Edit
+			</button>
+			<button class="btn btn-danger" ng-click="delete()" ng-if="isAuthorised(userRoles.admin)">
+				<i class="fa fa-trash"></i> Delete
+			</button>
+			</div>
+		</div>
 
-	<h1 class="page-header">{{version.name}}</h1>
+		<h1 class="page-header">{{version.name}}</h1>
+
+		<div class="issue-description" ng-bind-html="versionDescription"></div>
+	</div>
 </div>
+<div ng-include="'views/roadmap/_edit_version_modal.html'"></div>

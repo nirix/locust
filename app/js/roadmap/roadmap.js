@@ -38,12 +38,34 @@ angular.module('locust.roadmap', ['ui.router', 'ngResource'])
   };
 })
 
-// Show version controller
-.controller('RoadmapDetailController', function($scope, $state, Version) {
+// Edit version controller
+.controller('EditVersionController', function($state, $rootScope, $scope, $sce, Version){
   $scope.version = Version.get({ slug: $scope.$stateParams.slug });
 
+  $scope.update = function(version) {
+    if ($scope.versionForm.$valid) {
+      version.$save(function(version) {
+        $rootScope.version = version;
+        $('#editVersionModal').modal('hide');
+
+        // TODO: find a better way to do this
+        $rootScope.versionDescription = $sce.trustAsHtml(marked($rootScope.version.description || ''));
+
+        // In case the slug has changed
+        $state.go('roadmap-detail', { slug: version.slug });
+      });
+    }
+  };
+})
+
+// Show version controller
+.controller('RoadmapDetailController', function($scope, $rootScope, $state, $sce, Version) {
+  $rootScope.version = Version.get({ slug: $scope.$stateParams.slug }, function() {
+    $rootScope.versionDescription = $sce.trustAsHtml(marked($rootScope.version.description || ''));
+  });
+
   $scope.delete = function() {
-    $scope.version.$delete(function() {
+    $rootScope.version.$delete(function() {
       $state.go('roadmap');
     });
   };
