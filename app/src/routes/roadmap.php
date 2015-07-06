@@ -46,7 +46,15 @@ post('/roadmap.json', function () {
         'is_completed'  => ng('is_completed')
     ];
 
-    $version = new Version($data);
+    // Update or create?
+    if (ng('id')) {
+        $version = Version::find(ng('id'));
+    } else {
+        $version = new Version;
+    }
+
+    // Set data
+    $version->set($data);
 
     if ($version->save()) {
         echo json_encode($version);
