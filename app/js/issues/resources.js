@@ -12,6 +12,11 @@ angular.module('locust.issues')
       }
     }
   });
+})
+
+// Status
+.factory('Status', function($resource) {
+    return $resource(window.apiPath + 'statuses/:id.json');
 });
 
 })();

@@ -38,12 +38,15 @@ angular.module('locust.issues', ['ui.router', 'ngResource'])
 })
 
 // New issue controller
-.controller('NewIssueController', function($state, $scope, Issue, Version) {
-  $scope.versions = Version.query();
+.controller('NewIssueController', function($state, $scope, Issue, Version, Status) {
   $scope.issue = new Issue();
+
+  $scope.versions = Version.query();
+  $scope.statuses = Status.query();
 
   $scope.create = function(issue) {
     issue.version_id = issue.version.id;
+    issue.status_id = issue.status.id;
 
     if ($scope.issueForm.$valid) {
       $scope.issue.$save(function(issue) {

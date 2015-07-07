@@ -17,6 +17,7 @@
  */
 
 use Locust\Models\Issue;
+use Locust\Models\Status;
 
 // -----------------------------------------------------------------------------
 // Issues
@@ -32,11 +33,15 @@ post('/issues.json', function () {
         return http_response_code(401);
     }
 
+    $status = Status::find(ng('status_id'));
+
     $data = [
         'summary'     => ng('summary'),
         'description' => ng('description'),
         'version_id'  => ng('version_id'),
-        'user_id'     => currentUser()['id']
+        'user_id'     => currentUser()['id'],
+        'status_id'   => $status->id,
+        'is_closed'   => $status->is_closed,
     ];
 
     $issue = new Issue($data);

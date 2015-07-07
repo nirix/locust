@@ -36,3 +36,20 @@
 		</div>
 	</div>
 </div>
+
+<div class="form-group" ng-class="{ 'has-error': issueForm.status.$invalid && !issueForm.status.$pristine }">
+	<label for="" class="control-label col-md-3">Status</label>
+	<div class="col-md-9">
+		<select
+			name="status"
+			class="form-control"
+			ng-model="issue.status"
+			ng-options="status.name for status in statuses track by status.id"
+			required
+		>
+		</select>
+		<div ng-show="issueForm.status.$invalid && !issueForm.status.$pristine" class="help-block">
+			<div ng-show="issueForm.status.$error.required">Please choose a status.</div>
+		</div>
+	</div>
+</div>
