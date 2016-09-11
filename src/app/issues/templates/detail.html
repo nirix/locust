@@ -1,5 +1,7 @@
 <div class="container" *ngIf="issue">
   <div class="issue-detail">
     <h1 class="page-header">{{issue.summary}}</h1>
+
+    <div class="issue-body" [innerHTML]="markdown(issue.body)"></div>
   </div>
 </div>

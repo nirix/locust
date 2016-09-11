@@ -15,9 +15,7 @@ export class IssueListComponent implements OnInit {
 
   ngOnInit() {
     this.service.getIssues().subscribe(
-      issues => {
-        this.issues = issues;
-      },
+      issues => this.issues = issues,
       error => this.errorMessage = <any>error
      );
   }

@@ -3,12 +3,12 @@ import { Http, Response } from '@angular/http';
 import { Observable }     from 'rxjs/Observable';
 
 export class Issue {
-  constructor(public id: number, public summary: string) { }
+  constructor(public id: number, public summary: string, public body: string) {}
 }
 
 @Injectable()
 export class IssueService {
-  issuesUrl = "/api/issues";
+  issuesUrl = "api/issues";
   issues: Array<Issue>;
 
   constructor (private http: Http) {}

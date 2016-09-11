@@ -4,6 +4,8 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { Issue, IssueService } from './service';
 
+var marked = require('marked');
+
 @Component({
   templateUrl: './templates/detail.html',
   styleUrls: [
@@ -22,11 +24,16 @@ export class IssueDetailComponent implements OnInit, OnDestroy  {
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
        let id = +params['id'];
-       // this.service.getIssue(id).then(issue => this.issue = issue);
        this.service.getIssue(id).subscribe(
-         issue => this.issue = issue
+         issue => {
+           this.issue = issue
+         }
        );
      });
+  }
+
+  markdown(body: string) {
+    return marked.parse(body);
   }
 
   ngOnDestroy() {
