@@ -1,0 +1,11 @@
+@import 'bootstrap/_variables.scss';
+@import 'variables.scss';
+@import '_bootstrap.custom.scss';
+
+.page-header {
+  margin-top: 0;
+}
+
+main {
+  margin-bottom: 15px;
+}

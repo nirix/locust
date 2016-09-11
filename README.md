@@ -10,7 +10,7 @@ License
 
 Locust is released under the [Apache-2.0][4] license.
 
-[1]: https://angularjs.org
+[1]: https://angular.io
 [2]: https://php.net
 [3]: https://nirix.github.io/nanite
 [4]: https://www.apache.org/licenses/LICENSE-2.0
