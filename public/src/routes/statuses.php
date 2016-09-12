@@ -16,19 +16,11 @@
  * limitations under the License.
  */
 
-namespace Locust\Models;
+use Locust\Models\Status;
 
-use Avalon\Database\Model;
-
-/**
- * Version model.
- */
-class Version extends Model
-{
-    protected static $_validates = [
-        'name'          => ['required'],
-        'slug'          => ['required', 'unique'],
-        'is_completed'  => ['required'],
-        'display_order' => ['required']
-    ];
-}
+// -----------------------------------------------------------------------------
+// Issues
+get('/statuses', function () {
+    $statuses = Status::all();
+    echo json_encode($statuses);
+});

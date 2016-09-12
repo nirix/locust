@@ -20,19 +20,19 @@ use Locust\Models\Version;
 
 // -----------------------------------------------------------------------------
 // Roadmap (active versions)
-get('/roadmap.json', function () {
+get('/roadmap', function () {
     $versions = Version::select()->orderBy('display_order')->fetchAll();
     echo json_encode($versions);
 });
 
 // Completed versions
-get('/roadmap/completed.json', function () {
+get('/roadmap/completed', function () {
     $versions = Version::where('is_completed', 1)->orderBy('display_order')->fetchAll();
     echo json_encode($versions);
 });
 
 // Create version
-post('/roadmap.json', function () {
+post('/roadmap', function () {
     // Check if logged in and is admin
     if (!currentUser() || currentUser()['role'] != 'admin') {
         return http_response_code(currentUser() ? 401 : 403);
@@ -65,12 +65,12 @@ post('/roadmap.json', function () {
 });
 
 // Show version
-get('/roadmap/(.*).json', function ($slug) {
+get('/roadmap/(.*)', function ($slug) {
     $version = Version::find('slug', $slug);
     echo json_encode($version);
 });
 
-post('/roadmap/(.*).json', function ($slug) {
+post('/roadmap/(.*)', function ($slug) {
     // Check if logged in and is admin
     if (!currentUser() || currentUser()['role'] != 'admin') {
         return http_response_code(currentUser() ? 401 : 403);
@@ -97,7 +97,7 @@ post('/roadmap/(.*).json', function ($slug) {
 });
 
 // Delete version
-delete('/roadmap/(.*).json', function ($slug) {
+delete('/roadmap/(.*)', function ($slug) {
     // Check if logged in and is admin
     if (!currentUser() || currentUser()['role'] != 'admin') {
         return http_response_code(currentUser() ? 401 : 403);

@@ -1,0 +1,23 @@
+<div ng-controller="RoadmapController">
+<div class="roadmap container">
+	<div class="pull-right">
+		<button
+			class="btn btn-success"
+			data-toggle="modal"
+			data-target="#newVersionModal"
+			ng-if="isAuthorised(userRoles.admin)"
+		>
+			New Version
+		</button>
+	</div>
+
+	<h1 class="page-header">Roadmap</h1>
+
+	<ul class="versions">
+		<li ng-repeat="version in versions | filter:query | orderBy: orderProp">
+			<h2 class="version-name"><a ui-sref="roadmap-detail({slug: version.slug})">{{version.name}}</a></h2>
+		</li>
+	</ul>
+</div>
+<div ng-include="'assets/views/roadmap/_new_version_modal.html'"></div>
+</div>

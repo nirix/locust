@@ -21,11 +21,18 @@ namespace Locust\Models;
 use Avalon\Database\Model;
 
 /**
- * Status model.
+ * Version model.
  */
-class Status extends Model
+class Version extends Model
 {
     protected static $_validates = [
-        'summary'     => ['required']
+        'name'          => ['required'],
+        'slug'          => ['required', 'unique'],
+        'is_completed'  => ['required'],
+        'display_order' => ['required']
+    ];
+
+    protected static $_dataTypes = [
+        'is_completed' => 'boolean'
     ];
 }

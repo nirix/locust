@@ -1,0 +1,16 @@
+<div class="issues container" ng-controller="IssuesController">
+	<h1 class="page-header">Issues</h1>
+
+	<table class="table table-striped table-hover">
+		<thead>
+			<th>ID</th>
+			<th>Summary</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="issue in issues">
+				<td>{{issue.id}}</td>
+				<td><a ui-sref="issue-detail({id: issue.id})">{{issue.summary}}</a></td>
+			</tr>
+		</tbody>
+	</table>
+</div>

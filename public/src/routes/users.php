@@ -22,7 +22,7 @@ use Locust\Models\User;
 // Users
 
 // Create user
-post('/users.json', function () {
+post('/users', function () {
     $user = new User([
         'username' => ng('username'),
         'password' => ng('password'),
@@ -34,7 +34,7 @@ post('/users.json', function () {
         echo json_encode($user);
     } else {
         http_response_code(400);
-        echo json_encode($user->errors);
+        echo json_encode($user->errors());
     }
 });
 

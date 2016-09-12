@@ -2,16 +2,16 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": ">=5.4.0",
+        "php": ">=5.5.0",
         "nirix/nanite": "dev-master",
         "avalon/database": "dev-master"
     },
     "autoload": {
         "psr-4": {
-            "Locust\\": "app/src/"
+            "Locust\\": "public/src/"
         }
     },
     "config": {
-        "vendor-dir": "app/vendor/"
+        "vendor-dir": "public/vendor/"
     }
 }

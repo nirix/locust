@@ -1,0 +1,49 @@
+<div class="form-group" ng-class="{ 'has-error': versionForm.name.$invalid && !versionForm.name.$pristine }">
+	<label class="control-label col-md-3">Name</label>
+	<div class="col-md-9">
+		<input type="text" name="name" class="form-control" ng-model="version.name" required />
+		<div ng-show="versionForm.name.$invalid && !versionForm.name.$pristine" class="help-block">
+			<div ng-show="versionForm.name.$error.required">Please enter a name.</div>
+		</div>
+	</div>
+</div>
+
+<div class="form-group" ng-class="{ 'has-error': versionForm.slug.$invalid && !versionForm.slug.$pristine }">
+	<label class="control-label col-md-3">Slug</label>
+	<div class="col-md-9">
+		<input type="text" name="slug" class="form-control" ng-model="version.slug" required />
+		<div ng-show="versionForm.slug.$invalid && !versionForm.slug.$pristine" class="help-block">
+			<div ng-show="versionForm.slug.$error.required">Please enter a slug.</div>
+		</div>
+	</div>
+</div>
+
+<div class="form-group" ng-class="{ 'has-error': versionForm.is_completed.$invalid && !versionForm.is_completed.$pristine }">
+	<label class="control-label col-md-3">Status</label>
+	<div class="col-md-9">
+		<select name="is_completed" class="form-control" ng-model="version.is_completed" required>
+			<option value="0" selected>Active</option>
+			<option value="1">Completed</option>
+		</select>
+		<div ng-show="versionForm.is_completed.$invalid && !versionForm.is_completed.$pristine" class="help-block">
+			<div ng-show="versionForm.is_completed.$error.required">Please choose an option.</div>
+		</div>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="control-label col-md-3">Description</label>
+	<div class="col-md-9">
+		<textarea name="description" class="form-control" ng-model="version.description"></textarea>
+	</div>
+</div>
+
+<div class="form-group" ng-class="{ 'has-error': versionForm.display_order.$invalid && !versionForm.display_order.$pristine }">
+	<label class="control-label col-md-3">Display order</label>
+	<div class="col-md-9">
+		<input type="number" name="display_order" class="form-control" ng-model="version.display_order" value="0" required />
+		<div ng-show="versionForm.display_order.$invalid && !versionForm.display_order.$pristine" class="help-block">
+			<div ng-show="versionForm.display_order.$error.required">Please enter a display order.</div>
+		</div>
+	</div>
+</div>

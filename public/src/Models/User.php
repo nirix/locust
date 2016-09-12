@@ -28,6 +28,8 @@ class User extends Model
 {
     use SecurePassword;
 
+    protected static $_tableAlias = 'u';
+
     /**
      * Property to use for the secure password trait.
      *
